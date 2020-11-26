@@ -1,0 +1,14 @@
+{
+  "name": "bot-fast-typing",
+  "version": "1.0.0",
+  "description": "Bot Fast Typing",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Dimput",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^11.0.1"
+  }
+}
