@@ -2,7 +2,6 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
-
 function createWindow() {
     console.log("Welcome Professor !")
     var x = new Date();
@@ -17,7 +16,7 @@ function createWindow() {
 
     // and load the index.html of the app.
     // Load a remote URL
-    mainWindow.loadURL('https://shopee.co.id/cart/')
+    mainWindow.loadURL('https://shopee.co.id/Pen-Eyeshadow-Glitter-8-Warna-Ukuran-1g-E123-i.142047714.6337355612')
     var y = new Date()
     console.log("Successfully Login " + (y - x) / 1000 + " seconds")
     this.contents = mainWindow.webContents
@@ -26,9 +25,13 @@ function createWindow() {
         console.log("Product Page " + (y - x) / 1000 + " seconds")
         let code = `
                 setTimeout(function(){
-                    document.getElementsByClassName("stardust-checkbox__input")[0].click();
+                    document.getElementsByClassName("product-variation")[0].click();
+                    document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0].click();
+                },200);
+
+                setTimeout(function(){
                     document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0].click();
-                },500);
+                },1400);
                 `;
         contents.executeJavaScript(code);
         setTimeout(function () {
@@ -38,10 +41,10 @@ function createWindow() {
                         setTimeout(function(){
                             console.log("ASem")
                             document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
-                        },400);
+                        },200);
             `;
             contents.executeJavaScript(code);
-        }, 3500);
+        }, 4000);
     }
     )
     // });
