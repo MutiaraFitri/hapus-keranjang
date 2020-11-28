@@ -1,53 +1,105 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
 
 function createWindow() {
-    console.log("Welcome Professor !")
-    var x = new Date();
+    console.log("========================================\n\tWelcome Professor !\n========================================\n")
+
     // Create the browser window.
     this.mainWindow = new BrowserWindow({
         width: 1366,
         height: 800,
         webPreferences: {
-            nodeIntegration: true,
+            contextIsolation: false,
+            nodeIntegration: false,
         }
     })
 
     // and load the index.html of the app.
     // Load a remote URL
-    mainWindow.loadURL('https://shopee.co.id/Pen-Eyeshadow-Glitter-8-Warna-Ukuran-1g-E123-i.142047714.6337355612')
-    var y = new Date()
-    console.log("Successfully Login " + (y - x) / 1000 + " seconds")
     this.contents = mainWindow.webContents
-    contents.once('did-finish-load', () => {
-        var y = new Date()
-        console.log("Product Page " + (y - x) / 1000 + " seconds")
-        let code = `
-                setTimeout(function(){
-                    document.getElementsByClassName("product-variation")[0].click();
-                    document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0].click();
-                },200);
 
-                setTimeout(function(){
-                    document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0].click();
-                },1400);
-                `;
-        contents.executeJavaScript(code);
-        setTimeout(function () {
+    setInterval(function () { // Set interval for checking
+        var x = new Date();
+        var date = new Date(); // Create a Date object to find out what time it is
+
+        if (date.getHours() === 16 && date.getMinutes() === 37 && date.getSeconds() === 19 && date.getMilliseconds() <= 100) { // Check the time
+            mainWindow.loadURL('https://shopee.co.id/Case-for-iphone-6-6s-7-8-plus-X-Xr-Xs-Max-11-11-Pro-Max-clear-acrylic-casing-bening-transparan-i.104732272.2258258164')
             var y = new Date()
-            console.log("Checkout " + (y - x) / 1000 + " seconds")
+            console.log("Successfully Login " + (y - x) / 1000 + " seconds, at " + y)
+            console.log("Sekarang jam : " + new Date())
+            console.log("Product Page Loaded : " + (y - x) / 1000 + " seconds")
             let code = `
-                        setTimeout(function(){
-                            console.log("ASem")
-                            document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
-                        },200);
-            `;
+                        var helperButton = true;
+                        var helperCheckout = true;
+                        var helperPemesanan = true;
+
+                        setInterval(function () {
+                            var button = document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0]
+                            if(button){
+                                if(helperButton){
+                                    helperButton = false
+                                    document.getElementsByClassName("product-variation")[0].click();
+                                    document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0].click();
+                                }
+                                
+                                setInterval(function(){
+                                    var buttonCheckout = document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0]
+                                    if(buttonCheckout){
+                                        if(helperCheckout){
+                                            helperCheckout = false
+                                            document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0].click();
+                                        }
+
+                                        setInterval(function(){
+                                            var buatPesanan = document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0];
+                                            if(buatPesanan && helperPemesanan){
+                                                console.log(buatPesanan)
+                                                buatPesanan.click();
+                                                helperPemesanan=false;
+                                            }
+                                        },100);
+                                    }
+                                },100);
+                            }
+                        },100);
+                        `;
+            // Pake pilihan variant
+            // let code = `
+            //         setTimeout(function(){
+            //             document.getElementsByClassName("product-variation")[0].click();
+            //             document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0].click();
+            //         },200);
+
+            //         setTimeout(function(){
+            //             document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0].click();
+            //         },1400);
+            //         `;
             contents.executeJavaScript(code);
-        }, 4000);
-    }
-    )
-    // });
+            // setTimeout(function () {
+            //     var y = new Date()
+            //     console.log("Checkout " + (y - x) / 1000 + " seconds")
+            //     // Gapake pilih pengiriman
+            //     // let code = `
+            //     //             setTimeout(function(){
+            //     //                     document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
+            //     //             },300);
+            //     // `;
+            //     let code = `
+            //                 setTimeout(function(){
+            //                     document.getElementsByClassName("_3f0IkJ")[0].click();
+            //                     setTimeout(function(){
+            //                         document.getElementsByClassName("logistics-selection-channel-row")[2].click();
+            //                         document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
+            //                     },300);
+            //                 },300);
+            //     `;
+            //     contents.executeJavaScript(code);
+            // }, 3500);
+            // }
+            // )
+            // });
+        }
+    }, 100);
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 }
