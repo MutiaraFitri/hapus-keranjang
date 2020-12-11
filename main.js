@@ -2,108 +2,44 @@
 const { app, BrowserWindow } = require('electron')
 
 function createWindow() {
-    console.log("========================================\n\tWelcome Professor !\n========================================\n")
+    console.log("Welcome Professor !")
 
     // Create the browser window.
     this.mainWindow = new BrowserWindow({
         width: 1366,
         height: 800,
+        backgroundColor: '#2e2c29',
         webPreferences: {
-            contextIsolation: false,
-            nodeIntegration: false,
+            nodeIntegration: true,
         }
     })
 
     // and load the index.html of the app.
     // Load a remote URL
+    mainWindow.loadURL('https://shopee.co.id/cart/')
     this.contents = mainWindow.webContents
+    contents.once('did-finish-load', () => {
+        console.log("Successfully Login")
+        // console.log("First Step")
+        let code = `
+                    setTimeout(function(){
+                        var x =  document.getElementsByClassName("cart-item__action").length
+                        for(let i=0;i<x;i++){
+                            setTimeout(function(){
+                                document.getElementsByClassName("cart-item__action")[i].click();
+                            },200)
+                        }
+                    },1000)
+                    `;
+        mainWindow.webContents.executeJavaScript(code);
+        setTimeout(function () {
 
-    setInterval(function () { // Set interval for checking
-        var x = new Date();
-        var date = new Date(); // Create a Date object to find out what time it is
+            app.quit()
 
-        if (date.getHours() === 21 && date.getMinutes() === 10 && date.getSeconds() === 9 && date.getMilliseconds() <= 100) { // Check the time
-            mainWindow.loadURL('https://shopee.co.id/Daia-Softener-Powder-Detergent-850gr-i.64474495.1081901106')
-            var y = new Date()
-            console.log("Successfully Login " + (y - x) / 1000 + " seconds, at " + y)
-            console.log("Sekarang jam : " + new Date())
-            console.log("Product Page Loaded : " + (y - x) / 1000 + " seconds")
-            let code = `
-                        var helperButton = true;
-                        var helperCheckout = true;
-                        var helperPemesanan = true;
-                        var x = 0;
-
-                        setInterval(function () {
-                            var button = document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0]
-                            if(button){
-                                if(helperButton){
-                                    helperButton = false
-                                    // document.getElementsByClassName("product-variation")[0].click();
-                                    document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0].click();
-                                }
-                                
-                                setInterval(function(){
-                                    var buttonCheckout = document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0]
-                                    if(buttonCheckout){
-                                        if(helperCheckout){
-                                            helperCheckout = false
-                                            document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0].click();
-                                        }
-
-                                        setInterval(function(){
-                                            var buatPesanan = document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0];
-                                            var shopay = document.getElementsByClassName("stardust-radio-button__outer-circle")[0];
-                                            if(buatPesanan && shopay){
-                                                if(helperPemesanan){
-                                                    helperPemesanan=false;
-                                                    // console.log(document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click())
-                                                    document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
-                                                }
-                                            }
-                                        },100);
-                                    }
-                                },100);
-                            }
-                        },100);
-                        `;
-            // Pake pilihan variant
-            // let code = `
-            //         setTimeout(function(){
-            //             document.getElementsByClassName("product-variation")[0].click();
-            //             document.getElementsByClassName("btn btn-solid-primary btn--l YtgjXY")[0].click();
-            //         },200);
-
-            //         setTimeout(function(){
-            //             document.getElementsByClassName("shopee-button-solid shopee-button-solid--primary")[0].click();
-            //         },1400);
-            //         `;
-            contents.executeJavaScript(code);
-            // setTimeout(function () {
-            //     var y = new Date()
-            //     console.log("Checkout " + (y - x) / 1000 + " seconds")
-            //     // Gapake pilih pengiriman
-            //     // let code = `
-            //     //             setTimeout(function(){
-            //     //                     document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
-            //     //             },300);
-            //     // `;
-            //     let code = `
-            //                 setTimeout(function(){
-            //                     document.getElementsByClassName("_3f0IkJ")[0].click();
-            //                     setTimeout(function(){
-            //                         document.getElementsByClassName("logistics-selection-channel-row")[2].click();
-            //                         document.getElementsByClassName("stardust-button stardust-button--primary stardust-button--large _22Ktrb")[0].click();
-            //                     },300);
-            //                 },300);
-            //     `;
-            //     contents.executeJavaScript(code);
-            // }, 3500);
-            // }
-            // )
-            // });
-        }
-    }, 100);
+        }, 5000)
+    }
+    )
+    // });
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 }
